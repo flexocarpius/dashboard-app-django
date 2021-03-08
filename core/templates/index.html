@@ -1,0 +1,397 @@
+{% extends "layouts/base.html" %}
+{% load humanize %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">content_copy</i>
+            </div>
+            <p class="card-category">Used Space</p>
+            <h3 class="card-title">{{ space.used }}/{{ space.total }}
+              <small>GB</small>
+            </h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons text-danger">warning</i>
+              <a href="#pablo">Get More Space...</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">store</i>
+            </div>
+            <p class="card-category">Revenue</p>
+            <h3 class="card-title">${{ revenue|intcomma }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">date_range</i> Last 24 Hours
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-danger card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">info_outline</i>
+            </div>
+            <p class="card-category">Fixed Issues</p>
+            <h3 class="card-title">{{ fixed_issues }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">local_offer</i> Tracked from Github
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="fa fa-twitter"></i>
+            </div>
+            <p class="card-category">Followers</p>
+            <h3 class="card-title">+{{ followers }}</h3>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">update</i> Just Updated
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-chart">
+          <div class="card-header">
+            <div class="ct-chart" id="dailySalesChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Daily Sales</h4>
+            <p class="card-category">
+              <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> updated 4 minutes ago
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-chart">
+          <div class="card-header">
+            <div class="ct-chart" id="websiteViewsChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Email Subscriptions</h4>
+            <p class="card-category">Last Campaign Performance</p>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> campaign sent 2 days ago
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-chart">
+          <div class="card-header">
+            <div class="ct-chart" id="completedTasksChart"></div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Completed Tasks</h4>
+            <p class="card-category">Last Campaign Performance</p>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> campaign sent 2 days ago
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-tabs card-header-info">
+            <div class="nav-tabs-navigation">
+              <div class="nav-tabs-wrapper">
+                <span class="nav-tabs-title">Tasks:</span>
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="tab-content">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Employees Stats</h4>
+            <p class="card-category">New employees on 15th September, 2016</p>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-warning">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Salary</th>
+                <th>Country</th>
+              </thead>
+              <tbody>
+                {% for employee in employees %}
+                  <tr>
+                    <td>{{ employee.id }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>${{ employee.salary }}</td>
+                    <td>{{ employee.country }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="snackbar" class="snackbar"></div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+  <script>
+    const getDailySales = async () => {
+      const res = await fetch("{% url 'dashboard:daily_sales' %}", );
+      const data = await res.json();
+      return data.data;
+    }
+
+    const initDailySales = (data) => {
+      dataDailySalesChart = {
+        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        series: [
+          data
+        ]
+      };
+
+      optionsDailySalesChart = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        low: 0,
+        high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+        chartPadding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        },
+      }
+
+      var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+      md.startAnimationForLineChart(dailySalesChart);
+    }
+
+    const getEmailSubscriptions = async () => {
+      const res = await fetch("{% url 'dashboard:email_subscriptions' %}", );
+      const data = await res.json();
+      return data.data;
+    }
+
+    const initEmailSubscriptions = (data) => {
+      var dataWebsiteViewsChart = {
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        series: [
+          data
+        ]
+      };
+      var optionsWebsiteViewsChart = {
+        axisX: {
+          showGrid: false
+        },
+        low: 0,
+        high: 1000,
+        chartPadding: {
+          top: 0,
+          right: 5,
+          bottom: 0,
+          left: 0
+        }
+      };
+      var responsiveOptions = [
+        ['screen and (max-width: 640px)', {
+          seriesBarDistance: 5,
+          axisX: {
+            labelInterpolationFnc: function(value) {
+              return value[0];
+            }
+          }
+        }]
+      ];
+      var websiteViewsChart = Chartist.Bar('#websiteViewsChart', dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
+      md.startAnimationForBarChart(websiteViewsChart);
+    }
+
+    const getCompletedTasks = async () => {
+      const res = await fetch("{% url 'dashboard:completed_tasks' %}", );
+      const data = await res.json();
+      return data.data;
+    }
+
+    const initCompletedTasks = (data) => {
+      dataCompletedTasksChart = {
+        labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
+        series: [
+          data
+        ]
+      };
+
+      optionsCompletedTasksChart = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        low: 0,
+        high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+        chartPadding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        }
+      }
+
+      var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
+      md.startAnimationForLineChart(completedTasksChart);
+    }
+
+    const getCategories = async () => {
+      const res = await fetch("{% url 'dashboard:get_categories' %}", );
+      const data = await res.json();
+      return data.data;
+    }
+
+    const deleteTask = async (task) => {
+      const csrftoken = getCsrfToken();
+      const res = await fetch("{% url 'dashboard:delete_task' %}", {
+        method: 'POST',
+        headers: { "X-CSRFToken": csrftoken },
+        body: JSON.stringify(task)
+      });
+      const data = await res.json();
+      return data.data;
+    }
+
+    const updateTask = async (task) => {
+      const csrftoken = getCsrfToken();
+      const res = await fetch("{% url 'dashboard:update_task' %}", {
+        method: 'POST',
+        headers: { "X-CSRFToken": csrftoken },
+        body: JSON.stringify(task)
+      });
+      const data = await res.json();
+      return data.data;
+    }
+
+    const importCategories = (categories) => {
+      for (let i = 0; i < categories.length; i++) {
+        const category = categories[i];
+        $('.nav-tabs').append(`
+          <li class="nav-item">
+            <a class="nav-link" href="#${category.title}" data-toggle="tab">
+              <i class="material-icons">${category.icon}</i> ${category.title}
+              <div class="ripple-container"></div>
+            <div class="ripple-container"></div></a>
+          </li>
+        `);
+
+        let tasks = '';
+
+        for (let j = 0; j < category.tasks.length; j++) {
+          const t = category.tasks[j];
+          tasks += `
+            <tr data-id="${t.id}">
+              <td>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input task-checkbox" type="checkbox" value="" ${t.state ? 'checked="checked"' : ''} data-id="${t.id}">
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+              </td>
+              <td>${t.content}</td>
+              <td class="td-actions text-right">
+                <button type="button" rel="tooltip" title="" class="btn btn-danger btn-link btn-sm task-delete" data-original-title="Remove" data-id="${t.id}">
+                  <i class="material-icons">close</i>
+                </button>
+              </td>
+            </tr>
+          `;
+        }
+
+        $('.tab-content').append(`
+          <div class="tab-pane active" id="${category.title}">
+            <table class="table">
+              <tbody>
+                ${tasks}
+              </tbody>
+            </table>
+          </div>
+        `);
+
+        $(`a[href="#${category.title}"]`).tab('show');
+      }
+
+      $(`a[href="#${categories[0].title}"]`).tab('show');
+
+      showSnackbar('Info loaded.');
+    }
+
+    $(document).ready(function() {
+      getCategories().then(categories => importCategories(categories));
+      getDailySales().then(data => initDailySales(data));
+      getEmailSubscriptions().then(data => initEmailSubscriptions(data));
+      getCompletedTasks().then(data => initCompletedTasks(data));
+
+      $(document).on('click', '.task-checkbox', async (element) => {
+        let task = {
+          id: $(element.target).data('id'),
+          state: element.target.checked
+        };
+        const res = await updateTask(task);
+        showSnackbar('Task updated.');
+      });
+
+      $(document).on('click', '.task-delete', async (element) => {
+        let task = {
+          id: $(element.currentTarget).data('id')
+        };
+        const res = await deleteTask(task);
+        $(`tr[data-id="${task.id}"]`).remove();
+        showSnackbar('Task deleted.');
+      });
+    });
+  </script>
+
+{% endblock javascripts %}

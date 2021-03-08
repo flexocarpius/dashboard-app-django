@@ -1,0 +1,58 @@
+{% extends "layouts/base.html" %}
+{% load humanize %}
+{% block title %} Employees {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-info">
+                  <h4 class="card-title ">Employees</h4>
+                  <p class="card-category">Updated information from employees from Jan to Mar</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-info">
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          Country
+                        </th>
+                        <th>
+                          City
+                        </th>
+                        <th>
+                          Salary
+                        </th>
+                      </thead>
+                      <tbody>
+                      {% for employee in employees %}
+                        <tr>
+                          <td>{{ employee.id }}</td>
+                          <td>{{ employee.name }}</td>
+                          <td>{{ employee.country }}</td>
+                          <td>{{ employee.city }}</td>
+                          <td class="text-info">${{ employee.salary|intcomma }}</td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
